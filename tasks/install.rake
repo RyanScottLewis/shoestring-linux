@@ -5,7 +5,7 @@ packages.with_files.each do |package|
 
     dependencies = []
     dependencies << package.build_lock_path
-    dependencies += paths.os_fhs.explode
+    #dependencies += paths.os_fhs.explode # TODO: Causes rebuilds I think
     dependencies << path.dirname
 
     file path => dependencies do

@@ -5,23 +5,24 @@ signature "#{archive}.asc"
 checksum   '8b0941a48d2f980fd7036cfbd24aa1d414f03d9a0652ecbd5ec5c7ff1bee29e3'
 
 on_build do |package|
-  package.make_build do
-    <<~EOS
-      cd '#{package.build_path}'
-
+  cd package.build_path do
+    sh <<~EOS
       ./configure \
         --prefix=/usr/lib/musl \
         --exec-prefix=/usr \
         --enable-wrapper=all
     EOS
+
+    make
   end
 end
 
 on_install do |package|
-  package.make_install
-  sh <<~EOS
-    mv "#{paths.os_root.expand_path}"/lib/ld-musl*.so* "#{paths.os_root.expand_path}"/usr/lib/
-  EOS
+  cd(package.build_path) { make :install, 'DESTDIR' => paths.project_root.join(paths.os_root) }
+
+  cd paths.os_root do
+    sh "mv lib/ld-musl*.so* usr/lib/"
+  end
 end
 
 files %W(

@@ -4,20 +4,22 @@ archive   "https://kernel.org/pub/linux/libs/security/linux-privs/libcap2/#{name
 signature archive.gsub(/xz$/, 'sign')
 
 on_verify do |package|
-  package.verify_compressed_archive
+  sh "xz -cd '#{package.archive_path}' | gpg --verify '#{package.signature_path}' -"
 end
 
 on_build do |package|
-  package.make_build
+  cd(package.build_path) { make }
 end
 
 on_install do |package|
-  package.make_install(
-    'RAISE_SETFCAP' => 'no',
-    'prefix'        => '/usr',
-    'lib'           => '/lib',
-    'bin'           => '/bin',
-  )
+  cd(package.build_path) do
+    make :install,
+      'DESTDIR'       => paths.project_root.join(paths.os_root),
+      'RAISE_SETFCAP' => 'no',
+      'prefix'        => '/usr',
+      'lib'           => '/lib',
+      'bin'           => '/bin'
+  end
 end
 
 files %w(

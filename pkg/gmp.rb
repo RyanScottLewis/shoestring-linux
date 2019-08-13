@@ -4,18 +4,20 @@ archive   "https://gmplib.org/download/gmp/gmp-#{version}.tar.xz"
 signature "#{archive}.sig"
 
 on_build do |package|
-  package.make_build do
-    <<~EOS
+  cd package.build_path do
+    sh <<~EOS
       ./configure \
         --prefix=/usr \
         --enable-cxx \
         --enable-fat
     EOS
+
+    make
   end
 end
 
 on_install do |package|
-  package.make_install
+  cd(package.build_path) { make :install, 'DESTDIR' => paths.project_root.join(paths.os_root) }
 end
 
 files %w(

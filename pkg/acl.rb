@@ -5,18 +5,20 @@ signature "#{archive}.sig"
 checksum  '06be9865c6f418d851ff4494e12406568353b891ffe1f596b34693c387af26c7'
 
 on_build do |package|
-  package.make_build do
-    <<~EOS
+  cd package.build_path do
+    sh <<~EOS
       ./configure \
         --libdir=/usr/lib \
         --libexecdir=/usr/lib \
         --prefix=/usr
     EOS
+
+    make
   end
 end
 
 on_install do |package|
-  package.make_install
+  cd(package.build_path) { make :install, 'DESTDIR' => paths.project_root.join(paths.os_root) }
 end
 
 files %W(

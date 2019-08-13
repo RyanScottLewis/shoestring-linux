@@ -4,8 +4,8 @@ archive   "https://ftp.gnu.org/gnu/#{name}/#{name}-#{version}.tar.xz"
 signature "#{archive}.sig"
 
 on_build do |package|
-  package.make_build do
-    <<~EOS
+  cd package.build_path do
+    sh <<~EOS
       autoreconf -f -i # TODO: Not sure if needed
 
       ./configure \
@@ -14,11 +14,13 @@ on_build do |package|
         --with-openssl \
         --enable-no-install-program=groups,hostname,kill,uptime
     EOS
+
+    make
   end
 end
 
 on_install do |package|
-  package.make_install
+  cd(package.build_path) { make :install, 'DESTDIR' => paths.project_root.join(paths.os_root) }
 end
 
 files %w(

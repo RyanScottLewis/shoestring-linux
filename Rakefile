@@ -1,8 +1,12 @@
+# Add lib/ to Ruby load path
 $LOAD_PATH.unshift(File.expand_path(File.join("..", "lib"), __FILE__))
+
+# Require all RubyGems
 require 'bundler/setup'
-require 'rake/clean'
-require 'package/import'
-require 'path/import'
+
+require 'rake/clean' # TODO: REMOVE
+
+require 'helpers'
 
 # TODO: Wouldnt hurt to push this upstream.. maybe some sort of system for helper modules?
 
@@ -105,17 +109,17 @@ path name: :doc,              description: 'Project documentation'
 path name: :lib,              description: 'Library sources'
 path name: :pkg,              description: 'Package definitions'
 path name: :src,              description: 'Project sources'
-path name: :tmp,              description: 'Temporary file storage'
 path name: :var,              description: 'Variable file storage'
 path name: :fs,               description: 'Files to import into the Linux root path'
 path name: :tasks,            description: 'Rake tasks'
 
 path name: :isolinux_image,   description: 'ISOLINUX image',             path: '/usr/lib/syslinux/bios/isolinux.bin'
 path name: :isolinux_ldlinux, description: 'ISOLINUX ldlinux',           path: '/usr/lib/syslinux/bios/ldlinux.c32'
-path name: :isolinux_config,  description: 'ISOLINUX configuration',     path: paths.src.join('isolinux', 'isolinux.cfg')
+path name: :isolinux_config,  description: 'ISOLINUX configuration',     path: paths.src.join('isolinux.cfg')
 
 path name: :builds,           description: 'Package builds',             path: paths.var.join('builds')
 path name: :sources,          description: 'Package sources',            path: paths.var.join('sources')
+path name: :locks,            description: 'Package lock files',         path: paths.var.join('locks')
 
 path name: :task_graph,       description: 'Rake task dependency graph', path: paths.doc.join('task_graph.png')
 
@@ -155,7 +159,6 @@ Package.load_all(paths)
 # == Clean =========================================================================================
 
 CLEAN.include paths.sources
-CLEAN.include paths.tmp
 CLEAN.include paths.task_graph
 
 CLOBBER.include paths.build

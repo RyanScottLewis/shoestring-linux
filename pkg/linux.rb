@@ -9,11 +9,7 @@ files     %W(
 )
 
 on_verify do |package|
-  decompressed_path = package.archive_path.sub_ext('')
-  sh "xz --keep --decompress '#{package.archive_path}'" unless decompressed_path.exist?
-  package.archive_path = decompressed_path
-
-  sh "gpg --verify '#{package.signature_path}' '#{package.archive_path}'"
+  package.verify_compressed_archive
 end
 
 on_build do |package|

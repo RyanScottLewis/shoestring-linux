@@ -4,11 +4,95 @@ require 'rake/clean'
 require 'package/import'
 require 'path/import'
 
+# TODO: Wouldnt hurt to push this upstream.. maybe some sort of system for helper modules?
+
+class Path::Struct
+  def remove_ext
+    sub_ext('')
+  end
+
+  def symlink?
+    File.symlink?(to_s)
+  end
+end
+
+module PackageHelpers
+
+  include FileUtils
+
+  JOBS = `nproc`.to_i
+
+  def make_build
+    sh <<~EOS
+      cd '#{build_path}'
+
+      #{yield if block_given?}
+
+      make -j#{JOBS}
+    EOS
+  end
+
+  def make_install(env={})
+    env = {
+      'DESTDIR' => Path.all.os_root.expand_path
+    }.merge(env).map { |k, v| [k, v].join(?=) }.join(' ')
+
+    sh <<~EOS
+      cd '#{build_path}'
+
+      make #{env} install
+    EOS
+  end
+
+  def compress_documentation
+    documentation_paths = install_paths.
+      select { |path| path.to_s =~ %r{/man/} && path.extname == '.gz' }
+
+    documentation_paths.each do |compressed_path|
+      decompressed_path = compressed_path.remove_ext
+
+      if decompressed_path.symlink?
+        rm    decompressed_path
+        ln_sf decompressed_path, compressed_path
+      else
+        sh "gzip -9 --force '#{decompressed_path}'"
+      end
+    end
+  end
+
+  def strip_binaries
+    install_paths.select { |path| path.to_s =~ %r{/bin/} }.each do |path|
+      sh "strip --strip-all '#{path}'"
+    end
+  end
+
+  def standard_install
+    make_install
+    #compress_documentation # TODO: This fucks everything up - Mostly cause symlinks
+    strip_binaries
+  end
+
+  # kernel.org distributes packages in multiple compression formats, so instead of signing all of them
+  # they sign the tar file, then compress it, so we have to reverse that process.
+  def verify_compressed_archive
+    decompressed_path = archive_path.remove_ext
+
+    sh "xz --keep --decompress '#{archive_path}'" unless decompressed_path.exist?
+    self.archive_path = decompressed_path
+
+    sh "gpg --verify '#{signature_path}' '#{archive_path}'"
+  end
+
+  Package::Struct.prepend(self)
+
+end
+
+
 # == Config ========================================================================================
 
-NAME      = 'punylinux'
+NAME      = 'shoestring-linux'
 VERSION   = '0.0.1'
-ISO_LABEL = 'PunyLinux ISO'
+ISO_LABEL = 'Shoestring Linux ISO'
 
 # == Paths =========================================================================================
 

@@ -11,7 +11,6 @@ on_build do |package|
       ./configure \
         --prefix=/usr \
         --libexecdir=/usr/lib \
-        --with-openssl \
         --enable-no-install-program=groups,hostname,kill,uptime
     EOS
 

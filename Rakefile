@@ -16,7 +16,7 @@ ISO_LABEL = 'Shoestring Linux ISO'
 
 # == Paths =========================================================================================
 
-FHS      = %w(bin boot dev/pts dev/shm etc lib proc sbin sys tmp usr/bin usr/sbin)
+FHS      = %w(bin boot dev/pts dev/shm etc lib lib64 proc sbin sys tmp usr/lib usr/bin usr/sbin)
 FHS_GLOB = "{#{FHS.join(?,)}}"
 
 path name: :project_root, path: __dir__

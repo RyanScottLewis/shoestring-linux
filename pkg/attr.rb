@@ -22,8 +22,9 @@ on_install do |package|
   cd(package.build_path) { make :install, 'DESTDIR' => paths.project_root.join(paths.os_root) }
 end
 
+# TODO: Causes rebuilds
+# /etc/xattr.conf
 files %w(
-  /etc/xattr.conf
   /usr/bin/attr
   /usr/bin/getfattr
   /usr/bin/setfattr

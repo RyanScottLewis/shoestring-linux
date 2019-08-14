@@ -16,7 +16,7 @@ on_build do |package|
 end
 
 on_install do |package|
-  cd(package.build_path) do
+  cd package.build_path do
     os_root = paths.project_root.join(paths.os_root)
 
     make :install, 'DESTDIR' => os_root

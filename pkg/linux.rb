@@ -18,7 +18,7 @@ on_build do |package|
       'CONFIG_BLK_DEV_INITRD'    => ?y,   # Enable initial ramdisk
       'CONFIG_BLK_DEV_RAM'       => ?y,   # Enable /dev/ram
       'CONFIG_BLK_DEV_RAM_COUNT' => 1,    # /dev/ram device count
-      'CONFIG_BLK_DEV_RAM_SIZE'  => 8192, # RAM disk size (in kilobytes)
+      'CONFIG_BLK_DEV_RAM_SIZE'  => 8192, # RAM disk size (in kilobytes) # TODO: Needed?
     )
   end
 

@@ -4,9 +4,17 @@ A low-budget [PunyLinux](https://github.com/RyanScottLewis/punylinux) distributi
 
 ## Packages
 
-* [x] [GNU coreutils](https://www.gnu.org/software/coreutils/)
-* [x] [Zsh](http://www.zsh.org/)
-* [ ] [Systemd](https://www.freedesktop.org/wiki/Software/systemd/)
+* [GNU coreutils](https://www.gnu.org/software/coreutils/)
+* [glibc](https://www.gnu.org/software/libc/)
+* [Zsh](http://www.zsh.org/)
+* [BusyBox](https://www.busybox.net/)
+
+> Also includes each package's dependencies
+
+## TODO
+
+* Use [musl](http://www.musl-libc.org/) instead of `glibc`
+* Use [Systemd](https://www.freedesktop.org/wiki/Software/systemd/) instead of `busybox` (init applet)
 
 ## Contributing
 

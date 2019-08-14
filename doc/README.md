@@ -14,7 +14,9 @@ A low-budget [PunyLinux](https://github.com/RyanScottLewis/punylinux) distributi
 ## TODO
 
 * Use [musl](http://www.musl-libc.org/) instead of `glibc`
-* Use [Systemd](https://www.freedesktop.org/wiki/Software/systemd/) instead of `busybox` (init applet)
+* Use [Systemd](https://www.freedesktop.org/wiki/Software/systemd/) instead of `busybox` (`init` applet, `mdev` applet)
+* Use [inetutils](https://www.gnu.org/software/inetutils/) instead of `busybox` (`hostname` applet)
+* Use [util-linux](https://en.wikipedia.org/wiki/Util-linux) instead of `busybox` (`mount` applet)
 
 ## Contributing
 

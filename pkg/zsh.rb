@@ -32,7 +32,14 @@ on_build do |package|
 end
 
 on_install do |package|
-  cd(package.build_path) { make :install, 'DESTDIR' => paths.project_root.join(paths.os_root) }
+  os_root = paths.project_root.join(paths.os_root)
+
+  cd(package.build_path) do
+    make :install, 'DESTDIR' => os_root
+
+    mkdir_p os_root.join('bin')
+    ln_sf '../usr/bin/zsh', "#{os_root}/bin/sh"
+  end
 end
 
 # TODO: /usr/lib/zsh/5.7.1/zsh/pcre.so

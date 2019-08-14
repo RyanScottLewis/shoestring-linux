@@ -27,7 +27,6 @@ on_install do |package|
     cp '_install/bin/busybox', paths.project_root.join(paths.os_root, 'bin')
     ln_sf './busybox', paths.project_root.join(paths.os_root, 'bin', 'hostname')
     ln_sf './busybox', paths.project_root.join(paths.os_root, 'bin', 'mount')
-    ln_sf './busybox', paths.project_root.join(paths.os_root, 'bin', 'sh')
     ln_sf '../bin/busybox', paths.project_root.join(paths.os_root, 'sbin', 'ifconfig')
     ln_sf '../bin/busybox', paths.project_root.join(paths.os_root, 'sbin', 'init')
     ln_sf '../bin/busybox', paths.project_root.join(paths.os_root, 'sbin', 'mdev')

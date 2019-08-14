@@ -4,9 +4,9 @@ A low-budget [PunyLinux](https://github.com/RyanScottLewis/punylinux) distributi
 
 ## Packages
 
-* [GNU coreutils](https://www.gnu.org/software/coreutils/)
-* [Zsh](http://www.zsh.org/)
-* [Systemd](https://www.freedesktop.org/wiki/Software/systemd/)
+* [x] [GNU coreutils](https://www.gnu.org/software/coreutils/)
+* [x] [Zsh](http://www.zsh.org/)
+* [ ] [Systemd](https://www.freedesktop.org/wiki/Software/systemd/)
 
 ## Contributing
 

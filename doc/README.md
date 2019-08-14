@@ -17,6 +17,8 @@ A low-budget [PunyLinux](https://github.com/RyanScottLewis/punylinux) distributi
 * Use [Systemd](https://www.freedesktop.org/wiki/Software/systemd/) instead of `busybox` (`init` applet, `mdev` applet)
 * Use [inetutils](https://www.gnu.org/software/inetutils/) instead of `busybox` (`hostname` applet)
 * Use [util-linux](https://en.wikipedia.org/wiki/Util-linux) instead of `busybox` (`mount` applet)
+* Add [PCRE](https://www.pcre.org/)
+  * For optional Zsh dependency
 
 ## Contributing
 

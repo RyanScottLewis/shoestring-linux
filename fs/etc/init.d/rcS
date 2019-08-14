@@ -1,7 +1,9 @@
 #!/bin/busybox sh
 
-/bin/mount -a                  # Mount all mounts listed in /etc/fstab
-/sbin/mdev -s                  # Populate /dev
-/bin/hostname -F /etc/hostname # Set hostname
-/sbin/ifconfig lo 127.0.0.1 up # Initialize loopback
+mount -a                  # Mount all mounts listed in /etc/fstab
+mdev -s                   # Populate /dev
+hostname -F /etc/hostname # Set hostname
+ifconfig lo 127.0.0.1 up  # Initialize loopback
+
+cat /etc/motd
 
